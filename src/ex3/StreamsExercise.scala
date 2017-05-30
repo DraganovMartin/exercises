@@ -70,14 +70,14 @@ object StreamsExercise {
     * @see Know as a hint for the implementation that every char representing a digit
     *      has "asDigit" method to get its value
     */
-  def sumOfDigitsPowThree(number: Int) =  number.toString.map(_.asDigit).map(math.pow(_, 4).toInt).sum
+  def sumOfDigitsPowThree(number: Int) =  number.toString.map(_.asDigit).map(math.pow(_, 3).toInt).sum
 
   /**
     * TASK1 - find all natural numbers which sum of the third powers of the their digits
     * is equal to the number itself.
     * @example 153 = 1*1*1 + 5*5*5 + 3*3*3
     */
-    lazy val numbers = from(0).filter(x => sumOfDigitsPowThree(x) == x)
+    lazy val numbers = from(1).filter(x => sumOfDigitsPowThree(x) == x)
   /**
     * With the growth of the number's number of digits its value grows by 10 and the sum of third powers
     * if its digits grows with maximum 9^3=729. So with the growth of the digits number, the numbers grow
@@ -112,6 +112,6 @@ object StreamsExercise {
 
 //    println("Task1 numbers are " + resultStreamTask1.toList)
     // the expected result is List(1, 153, 370, 371, 407)
-    println(numbers.take(6).toList)
+    println(numbers.take(5).toList)
   }
 }
