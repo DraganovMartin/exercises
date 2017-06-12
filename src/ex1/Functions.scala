@@ -24,8 +24,8 @@ object Functions {
   // Грешно: )() | ((д) | ((das) (d)( 
   def balance(chars: List[Char]): Boolean = {
     if(chars.isEmpty)return true;
-      val leftBrackets = chars.filter(x => x == '(');
-      val rightBrackets = chars.filter(x => x == ')');
+      val leftBrackets = filter[Char](chars, x => x == '('); //chars.filter(x => x == '(');
+      val rightBrackets = filter[Char](chars, x => x == ')');
     if (leftBrackets.size == rightBrackets.size) return true;
     else return false;
   }
@@ -46,21 +46,22 @@ object Functions {
 
   def toUpperCase(chars: List[Char]) = {
     def upperCase(char: Char) = {
+      if(char >= 97 && char <= 122 )
       (char - 32).toChar;
     }
   
-    chars.map(upperCase)
+    map(chars, (ch) => upperCase(ch))
   }
 
   // Проверява дали съществува елемент отговарящ на f
   def exists(data: List[Int], f:(Int) => Boolean) : Boolean = {
-    val list = data.filter(x => f(x) )
+    val list = filter[Int](data, x => f(x))//data.filter(x => f(x) )
     if (list.isEmpty) return false;
     else return true
   }
 
   // Връща масив съдържащ само елементите отговарящи на f
-  def filter(data: List[Int], f: (Int) => Boolean): List[Int] = {
+  def filter[T](data: List[T], f: (T) => Boolean): List[Any] = {
     if(data.isEmpty) Nil
     else if (f(data.head)) data.head :: filter(data.tail,f)
     else filter(data.tail,f)
@@ -68,7 +69,7 @@ object Functions {
 
   // Проверява дали всички елементи отговарят на f
   def forall(data: List[Int], f:(Int) => Boolean) : Boolean = {
-    val list = data.filter(x => f(x))
+    val list = filter[Int](data,x => f(x))//data.filter(x => f(x))
     if (list.size == data.size) return true
     else return false
   }
@@ -97,7 +98,7 @@ object Functions {
 
     println(exists(arr,x=>x==3))
 
-    println(filter(arr,x => x %2 == 0))
+    println(filter[Int](arr,x => x %2 == 0))
 
     println(pascal(2,5))
 

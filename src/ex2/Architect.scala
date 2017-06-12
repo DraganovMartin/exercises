@@ -89,7 +89,7 @@ class Architect {
 
 object Test{
   def main(args: Array[String]): Unit = {
-    val intList = List(1,2,3,4,5,6,12,24,36);
+    val intList = List(1,2,3,36,4,5,6,12,24);
     val arc = new Architect;
     println(arc.max(intList).get)
     val triangle = new Triangle(3,4,5,4)

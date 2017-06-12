@@ -92,26 +92,35 @@ object StreamsExercise {
     * @see do not use 'for' operators, implement it based on the streams of all natural numbers and
     *      find the desired number based on that stream.
     */
-//  val capOfDigitsSizeTask1 = ???
+  val capOfDigitsSizeTask1 = from(0)
+                              .take(10)
+                              .filter(stepen => math.pow(10,stepen) < stepen  * math.pow(9,3)).max+1;
 
   /**
     * The stream of all numbers which may satisfy the TASK1 (defined above) conditions
     * @see Actually it is a stream computed from a range from 1 to the maximum number of
     *      the calculated capOfDigitsSizeTask1 digits.
     */
-  //lazy val rangeStreamTask1 = ???
+  lazy val rangeStreamTask1 = (1 to (capOfDigitsSizeTask1 - 1) * math.pow(9,3).toInt).toStream;
 
   /**
     * The stream of all numbers satisfying Task1 condition.
     */
-  //lazy val resultStreamTask1 = ???
+  lazy val resultStreamTask1 = rangeStreamTask1.filter(num => num == sumOfDigitsPowThree(num));
 
 
   def main(args: Array[String]): Unit = {
    // println("The fifth fibonacci number is " + fibFrom(1,1)(4))
 
-//    println("Task1 numbers are " + resultStreamTask1.toList)
-    // the expected result is List(1, 153, 370, 371, 407)
+
+
     println(numbers.take(5).toList)
+
+    // Task 1
+    println(capOfDigitsSizeTask1);
+    println(rangeStreamTask1.force.toList)
+
+    println("Task1 numbers are " + resultStreamTask1.toList)
+    // the expected result is List(1, 153, 370, 371, 407)
   }
 }
