@@ -22,12 +22,24 @@ object Functions {
   // Проверява дали скобите в даден масив от символи са балансирани.
   // Коректно: (a)asda(b)(v) | (((a))) | ()(()асдасд)
   // Грешно: )() | ((д) | ((das) (d)( 
-  def balance(chars: List[Char]): Boolean = {
-    if(chars.isEmpty)return true;
-      val leftBrackets = filter[Char](chars, x => x == '('); //chars.filter(x => x == '(');
-      val rightBrackets = filter[Char](chars, x => x == ')');
-    if (leftBrackets.size == rightBrackets.size) return true;
-    else return false;
+  def balance(chars: List[Char]):Boolean={
+    def loop(chars: List[Char],openBracketsCnt:Int,closeBracketsCnt:Int): Boolean = {
+      if(closeBracketsCnt > openBracketsCnt){
+        return false;
+      }
+      if(chars.isEmpty)
+        if(openBracketsCnt == closeBracketsCnt)true else false;
+      else {
+        if(chars.head == ')')
+          loop(chars.tail, openBracketsCnt, closeBracketsCnt+1);
+        else if(chars.head == '(')
+          loop(chars.tail, openBracketsCnt+1, closeBracketsCnt);
+        else loop(chars.tail, openBracketsCnt, closeBracketsCnt);
+      }
+    }
+
+    if(chars.head == ')') false;
+    else loop(chars, 0, 0);
   }
 
   def map(chars: List[Char], f: (Char) => Any) : Any ={
@@ -55,28 +67,34 @@ object Functions {
 
   // Проверява дали съществува елемент отговарящ на f
   def exists(data: List[Int], f:(Int) => Boolean) : Boolean = {
-    val list = filter[Int](data, x => f(x))//data.filter(x => f(x) )
+    val list = filter(data, x => f(x))//data.filter(x => f(x) )
     if (list.isEmpty) return false;
     else return true
   }
 
   // Връща масив съдържащ само елементите отговарящи на f
-  def filter[T](data: List[T], f: (T) => Boolean): List[Any] = {
-    if(data.isEmpty) Nil
-    else if (f(data.head)) data.head :: filter(data.tail,f)
-    else filter(data.tail,f)
+  def filter(data: List[Int], f: (Int) => Boolean) = {
+    def loop(data: List[Int], f: (Int) => Boolean, filtered: List[Int]): List[Int] = {
+      if (data.isEmpty) filtered;
+      else {
+        if (f(data.head)) loop(data.tail, f, filtered :+ data.head)
+        else loop(data.tail, f, filtered);
+      }
+    }
+
+    loop(data, f, List());
   }
 
   // Проверява дали всички елементи отговарят на f
   def forall(data: List[Int], f:(Int) => Boolean) : Boolean = {
-    val list = filter[Int](data,x => f(x))//data.filter(x => f(x))
+    val list = filter(data,x => f(x))//data.filter(x => f(x))
     if (list.size == data.size) return true
     else return false
   }
 
   // Връща числото от триъгълника на Паскал отговарящо на съответния ред/колона
   def pascal(c: Int, r: Int): Int = {
-    if (c >r || c<1 || r<1) return 0;
+    if (c >r || c<1 || r<1) return -1;
     def loop(c: Int, r:Int) : Int = {
       if (c == 1 || c == r) return 1;
       else loop(c-1,r-1) + loop(c, r-1);
@@ -98,7 +116,7 @@ object Functions {
 
     println(exists(arr,x=>x==3))
 
-    println(filter[Int](arr,x => x %2 == 0))
+    println(filter(arr,x => x %2 == 0))
 
     println(pascal(2,5))
 
