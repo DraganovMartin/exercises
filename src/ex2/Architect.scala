@@ -80,6 +80,7 @@ class Architect {
             case "rectangular" => iter(shapes.tail,n+1)
             case _ => iter(shapes.tail,n)
           }
+          case default => n;
         }
       }
     }
@@ -93,7 +94,8 @@ object Test{
     val arc = new Architect;
     println(arc.max(intList).get)
     val triangle = new Triangle(3,4,5,4)
-    val rectangularListTest = List(new Triangle(3,4,5,4),new Triangle(3,4,5,4),new Triangle(3,4,5,4),new Triangle(10,20,15,10),new Triangle(3,4,5,4))
+    val rectangularListTest = List(new Triangle(3,4,5,4),new Triangle(3,4,5,4),new Triangle(3,4,5,4),new Triangle(10,20,15,10),new Triangle(3,4,5,4),new Cube())
     println(arc.findRectangulars(rectangularListTest));
+
   }
 }

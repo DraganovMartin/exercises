@@ -56,14 +56,17 @@ object Functions {
     loop(chars,f,List());
   }
 
-  def toUpperCase(chars: List[Char]) = {
+
+      def toUpperCase(chars: List[Char]) = {
     def upperCase(char: Char) = {
       if(char >= 97 && char <= 122 )
       (char - 32).toChar;
+      else char;
     }
-  
-    map(chars, (ch) => upperCase(ch))
+
+    map(chars, upperCase)
   }
+
 
   // Проверява дали съществува елемент отговарящ на f
   def exists(data: List[Int], f:(Int) => Boolean) : Boolean = {
@@ -96,29 +99,52 @@ object Functions {
   def pascal(c: Int, r: Int): Int = {
     if (c >r || c<1 || r<1) return -1;
     def loop(c: Int, r:Int) : Int = {
-      if (c == 1 || c == r) return 1;
+      if (c == 0 || c == r) return 1;
       else loop(c-1,r-1) + loop(c, r-1);
     }
+    if (c > r || (c < 0 || r < 0)) {
+            return -1;
+          }
     loop(c,r)
   }
 
+//  def pascal(c: Int, r: Int): Int = {
+//    def pascalInner(c: Int, r: Int): Int = {
+//      if (c == 0 || c == r) 1;
+//      else pascalInner(c - 1, r - 1) + pascalInner(c, r - 1);
+//    }
+//
+//    // Performing argument validations outside the recursive function
+//    // Check for invalid column numbers and negative rows and columns
+//    if (c > r || (c < 0 || r < 0)) {
+//      return -1;
+//    }
+//
+//    pascalInner(c, r);
+//  }
+
   def main(args: Array[String]): Unit = {
-    val arr = List(1,2,3,4);
-    println(length(arr))
-    println(ifelse(1==2,1,2))
-
-    val brackets = List('(','a',')','a','s','d','a','(','b',')','(','v',')',' ','|',' ','(','(','(','a',')',')',')',' ','|',' ','(',')','(','(',')','а','с','д','а','д',')');
-    println(balance(brackets));
-
-    println(map(List('a','a','b'),_.toInt))
-
-    println(toUpperCase(brackets))
-
-    println(exists(arr,x=>x==3))
-
-    println(filter(arr,x => x %2 == 0))
-
+//    val arr = List(1,2,3,4);
+//    println(length(arr))
+//    println(ifelse(1==2,1,2))
+//
+//    val brackets = List('(','a',')','a','s','d','a','(','b',')','(','v',')',' ','|',' ','(','(','(','a',')',')',')',' ','|',' ','(',')','(','(',')','а','с','д','а','д',')');
+//    println(balance(brackets));
+//
+//    println(map(List('a','a','b'),_.toInt))
+//
+//    println(toUpperCase(brackets))
+//
+//    println(exists(arr,x=>x==3))
+//
+//    println(filter(arr,x => x %2 == 0))
+//
     println(pascal(2,5))
+
+//    val test1 =  List('A','b','c','D')
+//    val test2 = List(',', '!', '?', 'a')
+//    println(toUpperCase(test1))
+
 
   }
 }
